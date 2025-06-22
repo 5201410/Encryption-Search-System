@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>隐询智索 合取查询</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2196F3;
+            --primary-light: #64B5F6;
+            --primary-dark: #1976D2;
+            --secondary: #03A9F4;
+            --light-bg: #f5fbff;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --text-dark: #263238;
+            --text-medium: #546E7A;
+            --text-light: #ffffff;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 30px rgba(33, 150, 243, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(33, 150, 243, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(3, 169, 244, 0.08) 0%, transparent 25%);
+            z-index: -1;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            background-color: rgba(255, 255, 255, 0.92);
+            border-bottom: 1px solid rgba(33, 150, 243, 0.15);
+            backdrop-filter: blur(5px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 15px rgba(33, 150, 243, 0.1);
+            border-radius: var(--border-radius);
+            max-width: 1200px;
+            margin: 0 auto 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-text span {
+            color: var(--text-dark);
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 0.7rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(33, 150, 243, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--primary-dark);
+            text-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-light), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-medium);
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group label i {
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        select, .file-input-wrapper {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #b0cde8;
+            background-color: rgba(176, 205, 232, 0.15);
+            color: var(--text-dark);
+            font-size: 1rem;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-input-label {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            color: var(--text-medium);
+        }
+
+        .file-input-label i {
+            color: var(--primary);
+        }
+
+        .file-name {
+            margin-left: auto;
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+
+        button {
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: var(--shadow);
+            width: 100%;
+            grid-column: span 2;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(33, 150, 243, 0.3);
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding: 30px;
+            background-color: rgba(176, 205, 232, 0.15);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(33, 150, 243, 0.2);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(33, 150, 243, 0.2);
+        }
+
+        .result-header h3 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-content {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            min-height: 150px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            line-height: 1.6;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(33, 150, 243, 0.2);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .water-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(33, 150, 243, 0.1);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: ripple 1.5s linear infinite;
+        }
+
+        @keyframes ripple {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 0.5;
+            }
+            100% {
+                width: 500px;
+                height: 500px;
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .submit-btn {
+                grid-column: span 1;
+            }
+            
+            .container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-database"></i>
+            </div>
+            <div class="logo-text">隐询智索<span>查询系统</span></div>
+        </div>
+        <button class="back-btn" onclick="window.location.href='/'">
+            <i class="fas fa-arrow-left"></i>返回主界面
+        </button>
+    </header>
+
+    <div class="container">
+        <h1 class="title">合取查询</h1>
+        <p class="subtitle">高效查找多个数据集的共同元素，精准定位目标信息，适用于复杂数据对比分析场景</p>
+        
+        <form id="searchForm" enctype="multipart/form-data">
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="index_file"><i class="fas fa-folder-open"></i>选择数据集：</label>
+                    <select id="index_file" name="index_file" required>
+                        <option value="data/enron_index0.csv">enron_index0.csv</option>
+                        <option value="data/enron_index1.csv">enron_index1.csv</option>
+                        <option value="data/enwiki_index0.csv">enwiki_index0.csv</option>
+                        <option value="data/enwiki_index1.csv">enwiki_index1.csv</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="inverted_file"><i class="fas fa-search"></i>选择倒排索引：</label>
+                    <select id="inverted_file" name="inverted_file" required>
+                        <option value="data/enron_inverted0.csv">enron_inverted0.csv</option>
+                        <option value="data/enron_inverted1.csv">enron_inverted1.csv</option>
+                        <option value="data/enwiki_inverted0.csv">enwiki_inverted0.csv</option>
+                        <option value="data/enwiki_inverted1.csv">enwiki_inverted1.csv</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="query_file"><i class="fas fa-file-upload"></i>上传查询文档 (.txt)：</label>
+                    <div class="file-input-wrapper">
+                        <div class="file-input-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>点击选择文件</span>
+                            <span class="file-name" id="file-name">未选择文件</span>
+                        </div>
+                        <input type="file" id="query_file" name="query_file" accept=".txt" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-info-circle"></i>查询说明：</label>
+                    <div style="background: rgba(176, 205, 232, 0.15); padding: 15px; border-radius: 8px; color: var(--text-medium);">
+                        <p><i class="fas fa-check-circle" style="color: var(--primary);"></i> 请确保数据集与倒排索引匹配</p>
+                        <p><i class="fas fa-check-circle" style="color: var(--primary);"></i> 查询文档应为纯文本格式(.txt)</p>
+                        <p><i class="fas fa-check-circle" style="color: var(--primary);"></i> 结果将显示所有数据集的共同元素</p>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-play-circle"></i>开始查询
+                </button>
+            </div>
+        </form>
+        
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p>正在查询中，请稍候...</p>
+        </div>
+        
+        <div class="result-container">
+            <div class="result-header">
+                <h3><i class="fas fa-poll"></i>查询结果</h3>
+                <div><i class="fas fa-history"></i> 最后更新: <span id="update-time">--</span></div>
+            </div>
+            <div class="result-content">
+                <pre id="output">等待查询结果...</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 文件上传名称显示
+            const fileInput = document.getElementById('query_file');
+            const fileNameDisplay = document.getElementById('file-name');
+            
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    fileNameDisplay.textContent = this.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = '未选择文件';
+                }
+            });
+            
+            // 表单提交
+            document.getElementById('searchForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const indexFile = document.getElementById('index_file').value;
+                const invertedFile = document.getElementById('inverted_file').value;
+                const queryFile = document.getElementById('query_file').files[0];
+                
+                if (!queryFile) {
+                    alert('请上传查询文档！');
+                    return;
+                }
+                
+                // 显示加载动画
+                document.getElementById('loading').style.display = 'block';
+                document.getElementById('output').textContent = '正在处理查询，请稍候...';
+                
+                const formData = new FormData();
+                formData.append('index_file', indexFile);
+                formData.append('inverted_file', invertedFile);
+                formData.append('query_file', queryFile);
+                
+                // 更新最后查询时间
+                const now = new Date();
+                document.getElementById('update-time').textContent = 
+                    `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} 
+                    ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                // 模拟API请求延迟
+                setTimeout(() => {
+                    fetch('/search', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('output').textContent = data.result;
+                        document.getElementById('loading').style.display = 'none';
+                    })
+                    .catch(error => {
+                        document.getElementById('output').textContent = '查询失败，请稍后重试';
+                        document.getElementById('loading').style.display = 'none';
+                        console.error('Error:', error);
+                    });
+                }, 1500);
+            });
+            
+            // 水波纹效果
+            document.addEventListener('click', function(e) {
+                const ripple = document.createElement('div');
+                ripple.classList.add('water-effect');
+                ripple.style.left = `${e.clientX}px`;
+                ripple.style.top = `${e.clientY}px`;
+                document.body.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
