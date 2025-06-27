@@ -27,11 +27,11 @@
     ```
 - install source code and additional python libraries
     ```sh
-    git clone https://github.com/CDSecLab/Doris.git
-    cd Doris
+    git clone https://github.com/5201410/Encryption-Search-System.git
+    cd Encryption-Search-System
     pip3 install -r requirements.txt 
     ```
-
+相关的界面进入指令和步骤在文档第四章4.2功能展示部分详细说明
 
 ## File Structure
 
@@ -40,10 +40,9 @@
 ├── README.md
 ├── requirements.txt
 |
-| // the constructions of OXT, HXT, ConjFilter and Doris
-├── Doris_XF_new.py //disjunctive query
-├── Doris_XF_Boolean.py //boolean query
-├── Doris_XF.py //conjunctive query
+├── Disjunctive.py //disjunctive query
+├── Boolean.py //boolean query
+├── Conjunctive.py //conjunctive query
 ├── app.py //main beginning
 |
 ├── data // database of enron and enwiki, including indexes and inverted indexes
@@ -66,15 +65,3 @@
 │   └── test // examples and tests of tools
 
 
-
-
-
-## Reference
-
-[1]. David Cash, Stanislaw Jarecki, Charanjit S. Jutla, Hugo Krawczyk, Marcel-Catalin Rosu, Michael Steiner: Highly-Scalable Searchable Symmetric Encryption with Support for Boolean Queries. CRYPTO 2013: 353-373.
-
-[2]. Shangqi Lai, Sikhar Patranabis, Amin Sakzad, Joseph K. Liu, Debdeep Mukhopadhyay, Ron Steinfeld, Shifeng Sun, Dongxi Liu, Cong Zuo: Result Pattern Hiding Searchable Encryption for Conjunctive Queries. CCS 2018: 745-762.
-
-[3]. Sarvar Patel, Giuseppe Persiano, Joon Young Seo, Kevin Yeo: Efficient Boolean Search over Encrypted Data with Reduced Leakage. ASIACRYPT 2021: 577-607.
-
-[4]. Yunling Wang, Shi-Feng Sun, Jianfeng Wang, Xiaofeng Chen, Joseph K.Liu, and Dawu Gu. Practical Non-interactive Encrypted Conjunctive Search with Leakage Suppression. CCS 2024.
