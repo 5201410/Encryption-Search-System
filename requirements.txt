@@ -1,6 +1,0 @@
-bitarray==2.8.3
-mmh3==4.0.1
-pycryptodome==3.19.0
-pympler==1.1
-Flask Flask-Uploads Flask-SQLAlchemy 
-ace_tools pandas

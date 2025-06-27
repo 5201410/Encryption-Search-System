@@ -467,8 +467,6 @@
                 max-width: 350px;
             }
         }
-
-        /* 数字粒子效果 */
         .particle {
             position: absolute;
             color: rgba(33, 150, 243, 0.3);
@@ -542,13 +540,11 @@
     </footer>
 
     <script>
-        // 添加简单的动画效果
         document.addEventListener('DOMContentLoaded', function() {
             const featureCards = document.querySelectorAll('.feature-card');
             const buttons = document.querySelectorAll('button');
             const techTextContainer = document.querySelector('.tech-text-container');
             
-            // 卡片动画
             featureCards.forEach((card, index) => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(30px)';
@@ -560,7 +556,6 @@
                 }, 300 * index);
             });
             
-            // 按钮悬停效果增强
             buttons.forEach(button => {
                 button.addEventListener('mouseenter', function() {
                     this.style.transform = 'translateY(-5px)';
@@ -571,7 +566,6 @@
                 });
             });
             
-            // 水波纹效果
             document.addEventListener('click', function(e) {
                 const ripple = document.createElement('div');
                 ripple.classList.add('water-effect');
@@ -584,7 +578,6 @@
                 }, 1500);
             });
             
-            // 创建数字粒子效果
             function createParticles() {
                 if (!techTextContainer) return;
                 
@@ -596,31 +589,27 @@
                     particle.className = 'particle';
                     particle.textContent = characters.charAt(Math.floor(Math.random() * characters.length));
                     
-                    // 随机位置
                     const left = Math.random() * containerRect.width;
                     const top = Math.random() * containerRect.height;
                     
                     particle.style.left = `${left}px`;
                     particle.style.top = `${top}px`;
                     particle.style.opacity = '0';
-                    
-                    // 随机动画延迟和持续时间
+                   
                     const delay = Math.random() * 3;
                     const duration = 2 + Math.random() * 3;
                     
                     particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
                     
                     techTextContainer.appendChild(particle);
-                    
-                    // 淡入效果
+               
                     setTimeout(() => {
                         particle.style.opacity = '0.3';
                         particle.style.transition = 'opacity 1s ease';
                     }, delay * 1000);
                 }
             }
-            
-            // 添加浮动动画
+       
             const style = document.createElement('style');
             style.textContent = `
                 @keyframes float {

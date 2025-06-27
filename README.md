@@ -1,12 +1,6 @@
-# Doris
-
-This repo shows the constructions of OXT [1], HXT[2], ConjFilter[3] and Doris[4].
-
-## Environment Configuration
-
 - ubuntu20.04
 - python3.8
-- [pypbc](https://github.com/debatem1/pypbc)
+- [pypbc](https://github.com/5201410/Encryption-Search-System-)
     ```sh
     # install requirements libraries
     sudo apt update 
@@ -45,22 +39,18 @@ This repo shows the constructions of OXT [1], HXT[2], ConjFilter[3] and Doris[4]
 .
 ├── README.md
 ├── requirements.txt
-├── Doris_XF_new.py
-├── Doris_XF_Boolean.py
-├── Doris_XF.py
-├──
+|
+| // the constructions of OXT, HXT, ConjFilter and Doris
+├── Doris_XF_new.py //disjunctive query
+├── Doris_XF_Boolean.py //boolean query
+├── Doris_XF.py //conjunctive query
+├── app.py //main beginning
 |
 ├── data // database of enron and enwiki, including indexes and inverted indexes
 │   ├── enron_index0.csv // 10^2 key/value pairs
 │   ├── enron_index1.csv // 10^3 key/value pairs
-│   ├── enron_index2.csv // 10^4 key/value pairs
-│   ├── enron_index3.csv // 10^5 key/value pairs
-│   ├── enron_index4.csv // 10^6 key/value pairs
 │   ├── enron_inverted0.csv
 │   ├── enron_inverted1.csv
-│   ├── enron_inverted2.csv
-│   ├── enron_inverted3.csv
-│   ├── enron_inverted4.csv
 |   ├── ...
 |
 ├── Utils 
@@ -74,7 +64,17 @@ This repo shows the constructions of OXT [1], HXT[2], ConjFilter[3] and Doris[4]
 │   ├── fileUtils.py
 │   ├── pbcUtils.py
 │   └── test // examples and tests of tools
-|
-```
 
 
+
+
+
+## Reference
+
+[1]. David Cash, Stanislaw Jarecki, Charanjit S. Jutla, Hugo Krawczyk, Marcel-Catalin Rosu, Michael Steiner: Highly-Scalable Searchable Symmetric Encryption with Support for Boolean Queries. CRYPTO 2013: 353-373.
+
+[2]. Shangqi Lai, Sikhar Patranabis, Amin Sakzad, Joseph K. Liu, Debdeep Mukhopadhyay, Ron Steinfeld, Shifeng Sun, Dongxi Liu, Cong Zuo: Result Pattern Hiding Searchable Encryption for Conjunctive Queries. CCS 2018: 745-762.
+
+[3]. Sarvar Patel, Giuseppe Persiano, Joon Young Seo, Kevin Yeo: Efficient Boolean Search over Encrypted Data with Reduced Leakage. ASIACRYPT 2021: 577-607.
+
+[4]. Yunling Wang, Shi-Feng Sun, Jianfeng Wang, Xiaofeng Chen, Joseph K.Liu, and Dawu Gu. Practical Non-interactive Encrypted Conjunctive Search with Leakage Suppression. CCS 2024.

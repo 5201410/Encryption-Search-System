@@ -39,7 +39,7 @@ def search_intersection():
     with open(query_path, 'r', encoding='utf-8') as f:
         keywords = [line.strip() for line in f if line.strip()]
 
-    cmd = ['python3', 'Doris_XF.py', index_file, inverted_file] + keywords
+    cmd = ['python3', 'Conjunctive.py', index_file, inverted_file] + keywords
 
     try:
         result = subprocess.check_output(cmd, stderr=subprocess.STDOUT, text=True)
@@ -62,7 +62,7 @@ def search_union():
     with open(query_path, 'r', encoding='utf-8') as f:
         keywords = [line.strip() for line in f if line.strip()]
 
-    cmd = ['python3', 'Doris_XF_new.py', index_file, inverted_file] + keywords
+    cmd = ['python3', 'Disjunctive.py', index_file, inverted_file] + keywords
 
     try:
         result = subprocess.check_output(cmd, stderr=subprocess.STDOUT, text=True)
@@ -85,7 +85,7 @@ def search_boolean():
 
     try:
         result = subprocess.check_output(
-            ['python3', 'Doris_XF_Boolean.py', query_path, inverted_path],
+            ['python3', 'Boolean.py', query_path, inverted_path],
             stderr=subprocess.STDOUT,
             text=True
         )

@@ -504,7 +504,7 @@
                     return;
                 }
                 
-                // 显示加载动画
+              
                 document.getElementById('loading').style.display = 'block';
                 document.getElementById('output').textContent = '正在处理查询，请稍候...';
                 
@@ -519,7 +519,7 @@
                     `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} 
                     ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
                 
-                // 模拟API请求延迟
+           
                 setTimeout(() => {
                     fetch('/search', {
                         method: 'POST',
@@ -538,7 +538,7 @@
                 }, 1500);
             });
             
-            // 水波纹效果
+           
             document.addEventListener('click', function(e) {
                 const ripple = document.createElement('div');
                 ripple.classList.add('water-effect');
