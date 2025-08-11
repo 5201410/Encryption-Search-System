@@ -1,0 +1,23 @@
+edb setup: 0.24752497673034668 s
+total setup time: 0.24817490577697754 s
+tset size (cal length): 40.04 KB
+tset size (dump)      : 336.67 KB
+xset size (cal length): 631.12 KB
+xset size (dump)      : 690.50 KB
+gen stag for discussion: 3.600120544433594e-05 s
+retrive stag for discussion: 6.937980651855469e-05 s
+gen xtoken for discussion ∧ play: 6.031990051269531e-05 s
+gen xtoken for discussion ∧ site: 2.956390380859375e-05 s
+gen xtoken for discussion ∧ pre: 2.7418136596679688e-05 s
+gen stag for play: 2.6226043701171875e-06 s
+retrive stag for play: 4.982948303222656e-05 s
+gen xtoken for play ∧ site: 4.124641418457031e-05 s
+gen xtoken for play ∧ pre: 4.00543212890625e-05 s
+gen stag for site: 2.6226043701171875e-06 s
+retrive stag for site: 4.506111145019531e-05 s
+gen xtoken for site ∧ pre: 4.1484832763671875e-05 s
+gen stag for pre: 2.384185791015625e-06 s
+retrive stag for pre: 1.4781951904296875e-05 s
+get es: 1.5020370483398438e-05 s
+dec to get res: 0.0002932548522949219 s
+✅ 查询完成，无重复文档编号（解密后）: ['30', '95', '21', '158', '0', '16']

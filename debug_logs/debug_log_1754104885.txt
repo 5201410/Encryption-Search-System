@@ -1,0 +1,14 @@
+edb setup: 0.026610136032104492 s
+total setup time: 0.026706933975219727 s
+gen stag for gas: 4.0531158447265625e-05 s
+retrive stag for gas: 6.604194641113281e-05 s
+gen xtoken for gas & prices: 5.6743621826171875e-05 s
+gen xtoken for gas & buyer: 3.075599670410156e-05 s
+gen stag for prices: 3.337860107421875e-06 s
+retrive stag for prices: 3.314018249511719e-05 s
+gen xtoken for prices & buyer: 3.075599670410156e-05 s
+gen stag for buyer: 2.86102294921875e-06 s
+retrive stag for buyer: 5.14984130859375e-05 s
+get es: 3.933906555175781e-05 s
+dec to get res: 0.00041747093200683594 s
+✅ 查询完成，无重复文档编号（解密后）: ['13', '14']

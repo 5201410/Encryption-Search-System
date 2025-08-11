@@ -1,0 +1,20 @@
+stack setup Failure
+edb setup: 0.5690021514892578 s
+total setup time: 0.5700082778930664 s
+gen stag for discussion: 5.078315734863281e-05 s
+retrive stag for discussion: 0.00014162063598632812 s
+gen xtoken for discussion & play: 0.00016427040100097656 s
+gen xtoken for discussion & site: 0.00013113021850585938 s
+gen xtoken for discussion & pre: 0.00031828880310058594 s
+gen stag for play: 2.574920654296875e-05 s
+retrive stag for play: 0.00011610984802246094 s
+gen xtoken for play & site: 0.0001862049102783203 s
+gen xtoken for play & pre: 0.00021839141845703125 s
+gen stag for site: 2.1696090698242188e-05 s
+retrive stag for site: 0.00010585784912109375 s
+gen xtoken for site & pre: 0.00022149085998535156 s
+gen stag for pre: 2.1457672119140625e-05 s
+retrive stag for pre: 4.5299530029296875e-05 s
+get es: 7.295608520507812e-05 s
+dec to get res: 0.0008513927459716797 s
+✅ 查询完成，无重复文档编号（解密后）: ['158', '21', '95', '16', '0', '30']

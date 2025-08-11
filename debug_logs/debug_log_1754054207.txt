@@ -1,0 +1,24 @@
+edb setup: 0.29216670989990234 s
+total setup time: 0.29270100593566895 s
+gen stag for discussion: 3.647804260253906e-05 s
+retrive stag for discussion: 6.198883056640625e-05 s
+gen xtoken for discussion & play: 5.4836273193359375e-05 s
+gen xtoken for discussion & site: 2.86102294921875e-05 s
+gen xtoken for discussion & pre: 2.7179718017578125e-05 s
+gen stag for play: 2.86102294921875e-06 s
+retrive stag for play: 4.553794860839844e-05 s
+gen xtoken for play & site: 0.0001742839813232422 s
+gen xtoken for play & pre: 0.0001697540283203125 s
+gen stag for site: 5.4836273193359375e-06 s
+retrive stag for site: 0.000133514404296875 s
+gen xtoken for site & pre: 8.153915405273438e-05 s
+gen stag for pre: 3.5762786865234375e-06 s
+retrive stag for pre: 2.09808349609375e-05 s
+get es: 1.8358230590820312e-05 s
+dec to get res: 0.0003437995910644531 s
+Traceback (most recent call last):
+  File "Disjunctive.py", line 140, in <module>
+    print(f"✅ 查询完成，无重复文档编号（解密后）: {[x.decode() for x in res]}")
+  File "Disjunctive.py", line 140, in <listcomp>
+    print(f"✅ 查询完成，无重复文档编号（解密后）: {[x.decode() for x in res]}")
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xcc in position 1: invalid continuation byte

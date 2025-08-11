@@ -1,14 +1,11 @@
-# read index or inverted index
-def read_index(fpath: str) -> dict:
-    dct = {}  # w : [ids] or id : [ws]
+def read_index(fpath):
+    dct = {}
     with open(fpath, 'r', encoding='utf-8') as fo:
         for line in fo:
-            line = line.replace('\n', '')
-            lst = line.split(",")
-
-            key = lst.pop(0)
-            values = lst
-
-            for val in values:
-                dct[key] = dct.get(key, []) + [val]
+            parts = line.strip().split(",")
+            if len(parts) >= 2:
+                key = parts[0].strip()  # 清除空格、制表符
+                values = [p.strip() for p in parts[1:]]  # 同样清除
+                dct[key] = values
     return dct
+

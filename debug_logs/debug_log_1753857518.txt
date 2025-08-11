@@ -1,0 +1,14 @@
+edb setup: 0.018859386444091797 s
+total setup time: 0.018925189971923828 s
+gen stag for buyer: 3.2901763916015625e-05 s
+retrive stag for buyer: 5.459785461425781e-05 s
+gen xtoken for buyer & monthly: 4.887580871582031e-05 s
+gen xtoken for buyer & firms: 3.123283386230469e-05 s
+gen stag for monthly: 3.0994415283203125e-06 s
+retrive stag for monthly: 2.4557113647460938e-05 s
+gen xtoken for monthly & firms: 2.8848648071289062e-05 s
+gen stag for firms: 2.6226043701171875e-06 s
+retrive stag for firms: 1.1205673217773438e-05 s
+get es: 1.4781951904296875e-05 s
+dec to get res: 0.00017833709716796875 s
+✅ 查询完成，无重复文档编号（解密后）: ['13', '14']

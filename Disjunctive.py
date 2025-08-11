@@ -1,12 +1,11 @@
-# --- Doris 基础依赖模块 ---
 from Utils.cryptoUtils import prf, AES_enc, AES_dec
-from Utils.TSet import TSet, genStag
+from Utils.TSet import TSet, genStag, cal_size
 from Utils.SSPE_XF import SSPE_XF
 from Utils.fileUtils import read_index
 from dataclasses import dataclass
 from Crypto.Random import get_random_bytes
 import logging
-import os, sys, time
+import os, sys, time, pickle
 
 logging.basicConfig(filename='debug_log.txt', level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
@@ -21,7 +20,7 @@ sspe = SSPE_XF()
 class EDB:
     def __init__(self, n, k):
         self.tset = TSet(n, k)
-        self.ct = None  # 加密交集过滤器
+        self.ct = None  
 
     def setup(self, fpath_wid, fpath_idw, keys: PARAMS):
         t0 = time.time()
@@ -37,7 +36,8 @@ class EDB:
             for id in ids:
                 e = AES_enc(kw, id)
                 ws = dct_idw[id].copy()
-                ws.remove(w)
+                if w in ws:
+                    ws.remove(w)
                 for w_tmp in ws:
                     xtag = prf(keys.kx, w + w_tmp + str(i))
                     xset.add(xtag)
@@ -58,18 +58,18 @@ def search_union_no_overlap_encrypted(msk, ws, edb, keys):
 
     for i in range(num_tags):
         wi = ws[i]
-        # 1️⃣ 生成 stag
+    
         stag_t0 = time.time()
         stag = genStag(keys.kt, wi)
         print(f"gen stag for {wi}:", time.time() - stag_t0, "s")
 
-        # 2️⃣ 从 tset 检索密文编号
+       
         retrive_t0 = time.time()
         e_list = edb.tset.retrive(stag)
         print(f"retrive stag for {wi}:", time.time() - retrive_t0, "s")
         current_docids = set(e_list)
 
-        # 3️⃣ 计算交集（每个 wi 与后续 wj 两两做）
+       
         inter_docids = set()
         for j in range(i+1, num_tags):
             wj = ws[j]
@@ -81,21 +81,29 @@ def search_union_no_overlap_encrypted(msk, ws, edb, keys):
                 if sspe.dec(xtoken, edb.ct):
                     tmp_inter.add(e)
             inter_docids.update(tmp_inter)
-            print(f"gen xtoken for {wi} & {wj}:", time.time() - xtoken_t0, "s")
+            print(f"gen xtoken for {wi} ∧ {wj}:", time.time() - xtoken_t0, "s")
 
-        # 4️⃣ 差集处理
+       
         current_docids -= inter_docids
         final_res.update(current_docids)
 
-    # 5️⃣ 最后一个标签的全部密文编号直接加入
+  
     last_tag = ws[-1]
     last_t0 = time.time()
     stag = genStag(keys.kt, last_tag)
     e_list = edb.tset.retrive(stag)
     final_res.update(e_list)
 
+    start_es = time.time()
+    xtokens = []
+    for idx in range(len(e_list)):
+        qtag = prf(keys.kx, last_tag + last_tag + str(idx+1))
+        xtokens.append(qtag)
+    xtoken = sspe.keyGen(msk, xtokens)
+    es = sspe.dec(xtoken, edb.ct)
+    print(f"get es: {time.time() - start_es} s")
 
-    # 6️⃣ 解密最终结果
+  
     dec_t0 = time.time()
     all_res = set()
     for e in final_res:
@@ -107,7 +115,7 @@ def search_union_no_overlap_encrypted(msk, ws, edb, keys):
                 break
             except:
                 continue
-    print("dec to get res:", time.time() - dec_t0, "s")
+    print(f"dec to get res: {time.time() - dec_t0} s")
     return list(all_res)
 
 if __name__ == "__main__":
@@ -122,13 +130,20 @@ if __name__ == "__main__":
         sys.exit(1)
 
     keys = PARAMS()
-    edb = EDB(2000, 2)
+    edb = EDB(5000000, 3)
     setup_start = time.time()
     msk = edb.setup(f_wid, f_idw, keys)
     print("total setup time:", time.time() - setup_start, "s")
+    
+    tset_size_calc = cal_size(edb.tset)
+    print(f"tset size (cal length): {tset_size_calc / 1024:.2f} KB")
+    tset_size_dump = len(pickle.dumps(edb.tset))
+    print(f"tset size (dump)      : {tset_size_dump / 1024:.2f} KB")
+    xset_size_calc = len(edb.ct) * 32
+    print(f"xset size (cal length): {xset_size_calc / 1024:.2f} KB")
+    xset_size_dump = len(pickle.dumps(edb.ct))
+    print(f"xset size (dump)      : {xset_size_dump / 1024:.2f} KB")
 
-    query_start = time.time()
     res = search_union_no_overlap_encrypted(msk, ws, edb, keys)
-    print("total query time:", time.time() - query_start, "s")
     print(f"✅ 查询完成，无重复文档编号（解密后）: {[x.decode() for x in res]}")
 

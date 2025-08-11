@@ -1,0 +1,23 @@
+edb setup: 0.02915644645690918 s
+total setup time: 0.029250621795654297 s
+tset size (cal length): 4.00 KB
+tset size (dump)      : 29343.15 KB
+xset size (cal length): 47.50 KB
+xset size (dump)      : 52.04 KB
+gen stag for cost: 3.886222839355469e-05 s
+retrive stag for cost: 0.00018858909606933594 s
+gen xtoken for cost ∧ enron: 8.20159912109375e-05 s
+gen xtoken for cost ∧ trade: 4.220008850097656e-05 s
+gen xtoken for cost ∧ financial: 3.9577484130859375e-05 s
+gen stag for enron: 4.291534423828125e-06 s
+retrive stag for enron: 0.00015783309936523438 s
+gen xtoken for enron ∧ trade: 4.291534423828125e-05 s
+gen xtoken for enron ∧ financial: 8.344650268554688e-05 s
+gen stag for trade: 5.245208740234375e-06 s
+retrive stag for trade: 0.0001595020294189453 s
+gen xtoken for trade ∧ financial: 4.9114227294921875e-05 s
+gen stag for financial: 4.291534423828125e-06 s
+retrive stag for financial: 0.00014710426330566406 s
+get es: 3.62396240234375e-05 s
+dec to get res: 0.0004031658172607422 s
+✅ 查询完成，无重复文档编号（解密后）: ['3', '14', '8', '4', '13', '16']

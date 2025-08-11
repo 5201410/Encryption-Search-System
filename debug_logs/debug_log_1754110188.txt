@@ -1,0 +1,14 @@
+edb setup: 0.022619962692260742 s
+total setup time: 0.02268385887145996 s
+gen stag for D1: 3.170967102050781e-05 s
+retrive stag for D1: 3.4332275390625e-05 s
+gen xtoken for D1 & D3: 3.0994415283203125e-06 s
+gen xtoken for D1 & D4: 7.152557373046875e-07 s
+gen stag for D3: 3.337860107421875e-06 s
+retrive stag for D3: 1.3589859008789062e-05 s
+gen xtoken for D3 & D4: 4.76837158203125e-07 s
+gen stag for D4: 2.6226043701171875e-06 s
+retrive stag for D4: 1.1682510375976562e-05 s
+get es: 0.0001323223114013672 s
+dec to get res: 9.5367431640625e-07 s
+✅ 查询完成，无重复文档编号（解密后）: []

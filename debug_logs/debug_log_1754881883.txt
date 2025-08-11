@@ -1,0 +1,14 @@
+edb setup: 0.02729654312133789 s
+total setup time: 0.0273745059967041 s
+tset size (cal length): 4.00 KB
+tset size (dump)      : 29343.15 KB
+xset size (cal length): 47.50 KB
+xset size (dump)      : 52.04 KB
+gen stag for year: 3.0994415283203125e-05 s
+retrive stag for year: 7.081031799316406e-05 s
+gen xtoken for year ∧ regular: 3.0994415283203125e-06 s
+gen stag for regular: 3.814697265625e-06 s
+retrive stag for regular: 4.982948303222656e-05 s
+get es: 1.9788742065429688e-05 s
+dec to get res: 2.384185791015625e-07 s
+✅ 查询完成，无重复文档编号（解密后）: []

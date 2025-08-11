@@ -1,0 +1,6 @@
+edb setup: 0.28929829597473145 s
+total setup time: 0.2901771068572998 s
+Traceback (most recent call last):
+  File "Disjunctive.py", line 138, in <module>
+    tset_size_calc = cal_size(edb.tset)
+NameError: name 'cal_size' is not defined

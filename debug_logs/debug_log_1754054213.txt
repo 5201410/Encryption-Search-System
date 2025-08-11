@@ -1,0 +1,19 @@
+edb setup: 0.26773595809936523 s
+total setup time: 0.2686574459075928 s
+gen stag for discussion: 4.029273986816406e-05 s
+retrive stag for discussion: 8.177757263183594e-05 s
+gen xtoken for discussion & play: 7.62939453125e-05 s
+gen xtoken for discussion & site: 4.601478576660156e-05 s
+gen xtoken for discussion & pre: 4.220008850097656e-05 s
+gen stag for play: 4.5299530029296875e-06 s
+retrive stag for play: 6.556510925292969e-05 s
+gen xtoken for play & site: 6.604194641113281e-05 s
+gen xtoken for play & pre: 6.079673767089844e-05 s
+gen stag for site: 4.0531158447265625e-06 s
+retrive stag for site: 6.008148193359375e-05 s
+gen xtoken for site & pre: 6.532669067382812e-05 s
+gen stag for pre: 4.0531158447265625e-06 s
+retrive stag for pre: 2.2411346435546875e-05 s
+get es: 2.3603439331054688e-05 s
+dec to get res: 0.0004291534423828125 s
+✅ 查询完成，无重复文档编号（解密后）: ['21', '30', '0', '95', '16', '158']

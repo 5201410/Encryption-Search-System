@@ -10,7 +10,7 @@ from dataclasses import dataclass
 import sys
 import os
 
-# 配置日志记录
+
 logging.basicConfig(filename='debug_log.txt', level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 
@@ -52,10 +52,12 @@ class EDB:
 
         logging.debug(f"T: {T}")  # Log the data for debugging
         keys.kt = self.tset.setup(T)
+        logging.debug(f"TSet: {self.tset}")  # 添加TSet调试日志
 
         msk_bf = sspe.setup(len(xset))
         sspe.enc(msk_bf, xset)
         self.ct = msk_bf.xf
+        logging.debug(f"XSet encrypted as ct: {self.ct}")  # 添加XSet加密后的ct调试日志
 
         logging.debug(f"ct: {self.ct}")  # Log the encrypted data
         return msk_bf.msk
@@ -72,6 +74,7 @@ def search(msk: MSK, ws: List[str], edb: EDB, keys: PARAMS) -> List[int]:
         for j in range(1, len(ws)):
             qtag = prf(keys.kx, w1 + ws[j] + str(i + 1))
             QSet.append(qtag)
+        logging.debug(f"QSet for {ws}: {QSet}")  # 添加QSet调试日志
 
         xtoken = sspe.keyGen(msk, QSet)
         if sspe.dec(xtoken, edb.ct):
@@ -130,10 +133,9 @@ if __name__ == "__main__":
     if not os.path.exists(f_idw) or not os.path.exists(f_wid):
         print("❌ 文件路径无效")
         sys.exit(1)
-
-    # 设置较大的空间参数，避免溢出
-    n = 2000
-    k = 2
+        
+    n = 500000
+    k = 3
 
     start = time()
     keys = PARAMS()
@@ -141,6 +143,16 @@ if __name__ == "__main__":
     msk = edb.setup(f_wid, f_idw, keys)
     end = time()
     print(f"edb setup: {end-start} s")
+    
+    
+    tset_size_calc = cal_size(edb.tset)
+    print(f"tset size (cal length): {tset_size_calc / 1024:.2f} KB")
+    tset_size_dump = len(pickle.dumps(edb.tset))
+    print(f"tset size (dump)      : {tset_size_dump / 1024:.2f} KB")
+    xset_size_calc = len(edb.ct) * 32
+    print(f"xset size (cal length): {xset_size_calc / 1024:.2f} KB")
+    xset_size_dump = len(pickle.dumps(edb.ct))
+    print(f"xset size (dump)      : {xset_size_dump / 1024:.2f} KB")
 
     inds = search(msk, ws, edb, keys)
     print(f"res:{inds}")

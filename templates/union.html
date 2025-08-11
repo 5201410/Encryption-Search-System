@@ -6,6 +6,7 @@
     <title>隐询智索 析取查询</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary: #2196F3;
@@ -65,7 +66,7 @@
             z-index: 100;
             box-shadow: 0 2px 15px rgba(33, 150, 243, 0.1);
             border-radius: var(--border-radius);
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto 30px;
         }
 
@@ -117,103 +118,54 @@
             box-shadow: 0 6px 20px rgba(33, 150, 243, 0.3);
         }
 
-        .container {
-            background: var(--card-bg);
-            padding: 3rem;
-            border-radius: var(--border-radius);
-            max-width: 1000px;
+        .main-container {
+            display: flex;
+            gap: 30px;
+            max-width: 1400px;
             margin: 0 auto;
+            align-items: stretch;
+        }
+
+        .left-panel, .right-panel {
+            flex: 1;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             border: 1px solid rgba(33, 150, 243, 0.15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-
-        .title {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            text-align: center;
-            color: var(--primary-dark);
-            text-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-light), var(--secondary));
-            border-radius: 2px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: var(--text-medium);
-            margin-bottom: 40px;
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
         }
 
         .form-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-weight: 600;
             color: var(--primary-dark);
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .form-group label i {
-            color: var(--primary);
-            font-size: 1.3rem;
-        }
-
         select, .file-input-wrapper {
             width: 100%;
-            padding: 1rem;
+            padding: 0.8rem;
             border-radius: 8px;
             border: 1px solid #b0cde8;
             background-color: rgba(176, 205, 232, 0.15);
             color: var(--text-dark);
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: var(--transition);
             outline: none;
-        }
-
-        select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
         }
 
         .file-input-wrapper {
@@ -235,7 +187,7 @@
         }
 
         .file-input-label {
-            padding: 1rem;
+            padding: 0.8rem;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -243,13 +195,9 @@
             color: var(--text-medium);
         }
 
-        .file-input-label i {
-            color: var(--primary);
-        }
-
         .file-name {
             margin-left: auto;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--primary-dark);
             font-weight: 500;
             white-space: nowrap;
@@ -259,10 +207,10 @@
         }
 
         button {
-            padding: 1rem;
+            padding: 0.8rem 1.5rem;
             border: none;
             border-radius: 8px;
-            font-size: 1.2rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: var(--transition);
             font-weight: 600;
@@ -277,55 +225,193 @@
             color: white;
             box-shadow: var(--shadow);
             width: 100%;
-            grid-column: span 2;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(33, 150, 243, 0.3);
-        }
-
-        .result-container {
-            margin-top: 30px;
-            padding: 30px;
-            background-color: rgba(176, 205, 232, 0.15);
+        .query-content {
+            background: rgba(176, 205, 232, 0.15);
+            padding: 4px 8px;
             border-radius: var(--border-radius);
-            border: 1px solid rgba(33, 150, 243, 0.2);
+            margin-bottom: 10px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.8rem;
+            min-height: 35px;
+            max-height: 60ps;
+            overflow-y: auto;
         }
 
-        .result-header {
+        .union-display {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(33, 150, 243, 0.2);
+            gap: 10px;
         }
 
-        .result-header h3 {
+        .union-keyword {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.2);
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .union-operator {
+            font-size: 1.3rem;
             color: var(--primary-dark);
-            font-size: 1.5rem;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .query-results {
+            background: rgba(176, 205, 232, 0.15);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            min-height: 120px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+            margin-top: 10px;
+            font-size: 1.4rem;  
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .results-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .result-item {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .chart-container {
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .result-content {
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 8px;
-            min-height: 150px;
-            max-height: 400px;
-            overflow-y: auto;
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
-        pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1.1rem;
+        .chart-wrapper {
+            background: rgba(176, 205, 232, 0.15);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            height: 250px;
+        }
+
+        .gauge-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(176, 205, 232, 0.15);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            height: 250px;
+        }
+
+        .gauge {
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+
+        .gauge-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.4rem;
+            font-weight: bold;
             color: var(--primary-dark);
-            line-height: 1.6;
+            transition: all 0.8s ease-out;
+        }
+
+        .data-stream {
+            background: rgba(176, 205, 232, 0.15);
+            padding: 10px;
+            border-radius: var(--border-radius);
+            min-height: 110px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .data-stream pre {
+            margin: 0;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .time-stats {
+            margin-bottom: 20px;
+            background: rgba(176, 205, 232, 0.15);
+            padding: 15px;
+            border-radius: var(--border-radius);
+        }
+
+        .time-stat {
+            margin-bottom: 15px;
+        }
+
+        .time-stat-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .time-bar {
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .time-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 5px;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            min-width: 40px;
+            transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .loading {
@@ -349,49 +435,25 @@
             100% { transform: rotate(360deg); }
         }
 
-        .water-effect {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(33, 150, 243, 0.1);
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            animation: ripple 1.5s linear infinite;
-        }
-
-        @keyframes ripple {
-            0% {
-                width: 0;
-                height: 0;
-                opacity: 0.5;
+        @media (max-width: 1200px) {
+            .main-container {
+                flex-direction: column;
             }
-            100% {
-                width: 500px;
-                height: 500px;
-                opacity: 0;
+            
+            .left-panel, .right-panel {
+                width: 100%;
             }
         }
 
         @media (max-width: 768px) {
-            .form-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .submit-btn {
-                grid-column: span 1;
-            }
-            
-            .container {
-                padding: 2rem 1.5rem;
-            }
-            
-            .title {
-                font-size: 2rem;
-            }
-            
             .header {
                 flex-direction: column;
                 gap: 15px;
                 text-align: center;
+            }
+            
+            .chart-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -409,11 +471,8 @@
         </button>
     </header>
 
-    <div class="container">
-        <h1 class="title">析取查询</h1>
-        <p class="subtitle">整合多个数据集的所有元素，全面覆盖所需信息，提供完整的数据视图</p>
-        
-        <form id="unionForm" enctype="multipart/form-data">
+    <div class="main-container">
+        <div class="left-panel">
             <div class="form-container">
                 <div class="form-group">
                     <label for="index_file"><i class="fas fa-folder-open"></i>选择数据集：</label>
@@ -447,40 +506,107 @@
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <label><i class="fas fa-info-circle"></i>查询说明：</label>
-                    <div style="background: rgba(176, 205, 232, 0.15); padding: 15px; border-radius: 8px; color: var(--text-medium);">
-                        <p><i class="fas fa-check-circle" style="color: var(--primary);"></i> 请确保数据集与倒排索引匹配</p>
-                        <p><i class="fas fa-check-circle" style="color: var(--primary);"></i> 查询文档应为纯文本格式(.txt)</p>
-                        <p><i class="fas fa-check-circle" style="color: var(--primary);"></i> 结果将显示所有数据集的合并元素</p>
-                    </div>
-                </div>
-                
-                <button type="submit" class="submit-btn">
+                <button type="submit" class="submit-btn" id="submit-btn">
                     <i class="fas fa-object-group"></i>开始析取查询
                 </button>
             </div>
-        </form>
-        
-        <div class="loading" id="loading">
-            <div class="loading-spinner"></div>
-            <p>正在查询中，请稍候...</p>
+            
+            <div class="query-info">
+                <h3><i class="fas fa-search"></i> 查询内容</h3>
+                <div class="query-content" id="query-content">
+                    <div class="union-display" id="union-display">
+                        等待查询...
+                    </div>
+                </div>
+                
+                <h3><i class="fas fa-terminal"></i> 后台数据流</h3>
+                <div class="data-stream">
+                    <pre id="debug-log">等待查询数据...</pre>
+                </div>
+                
+                <h3><i class="fas fa-list-alt"></i> 查询结果</h3>
+                <div class="query-results" id="query-results">
+                    等待查询结果...
+                </div>
+            </div>
         </div>
         
-        <div class="result-container">
-            <div class="result-header">
-                <h3><i class="fas fa-poll"></i>查询结果</h3>
-                <div><i class="fas fa-history"></i> 最后更新: <span id="update-time">--</span></div>
+        <div class="right-panel">
+            <h3><i class="fas fa-chart-bar"></i> 析取查询执行时间详情</h3>
+            
+            <div class="chart-grid">
+                <div class="chart-wrapper">
+                    <h4 class="chart-title"><i class="fas fa-bolt"></i> 生成 Stag 时间</h4>
+                    <canvas id="genStagChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <h4 class="chart-title"><i class="fas fa-search"></i> 检索 Stag 时间</h4>
+                    <canvas id="retriveStagChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <h4 class="chart-title"><i class="fas fa-key"></i> 生成 XToken 时间</h4>
+                    <canvas id="genXTokenChart"></canvas>
+                </div>
+                <div class="gauge-container">
+                    <h4 class="chart-title"><i class="fas fa-percentage"></i> 子集判定时间占比</h4>
+                    <div class="gauge">
+                        <canvas id="subsetGauge"></canvas>
+                        <div class="gauge-value" id="gauge-value" style="font-size: 1.4rem; color: var(--primary-dark);">0‱</div>
+                    </div>
+                </div>
             </div>
-            <div class="result-content">
-                <pre id="output">等待查询结果...</pre>
+            
+            <!-- 时间统计 -->
+            <h3><i class="fas fa-stopwatch"></i> 时间统计</h3>
+            <div class="time-stats">
+                <div class="time-stat">
+                    <div class="time-stat-label">
+                        <span>文件读取解析</span>
+                        <span id="file-read-time">0.000s</span>
+                    </div>
+                    <div class="time-bar">
+                        <div class="time-bar-fill" id="file-read-bar" style="width: 0%">0%</div>
+                    </div>
+                </div>
+                <div class="time-stat">
+                    <div class="time-stat-label">
+                        <span>索引构建</span>
+                        <span id="index-build-time">0.000s</span>
+                    </div>
+                    <div class="time-bar">
+                        <div class="time-bar-fill" id="index-build-bar" style="width: 0%">0%</div>
+                    </div>
+                </div>
+                <div class="time-stat">
+                    <div class="time-stat-label">
+                        <span>成功返回响应</span>
+                        <span id="response-time">0.000s</span>
+                    </div>
+                    <div class="time-bar">
+                        <div class="time-bar-fill" id="response-bar" style="width: 0%">0%</div>
+                    </div>
+                </div>
+                <div class="time-stat">
+                    <div class="time-stat-label">
+                        <span>总耗时</span>
+                        <span id="total-time">0.000s</span>
+                    </div>
+                    <div class="time-bar">
+                        <div class="time-bar-fill" id="total-time-bar" style="width: 0%">0%</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+        <p>正在查询中，请稍候...</p>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 文件上传名称显示
+          
             const fileInput = document.getElementById('query_file');
             const fileNameDisplay = document.getElementById('file-name');
             
@@ -492,8 +618,264 @@
                 }
             });
             
-            // 表单提交
-            document.getElementById('unionForm').addEventListener('submit', function (event) {
+           
+            let genStagChart, retriveStagChart, genXTokenChart, subsetGauge;
+            
+            function initCharts() {
+               
+                const genStagCtx = document.getElementById('genStagChart').getContext('2d');
+                genStagChart = new Chart(genStagCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: '时间 (s)',
+                            backgroundColor: 'rgba(33, 150, 243, 0.7)',
+                            borderColor: 'rgba(33, 150, 243, 1)',
+                            borderWidth: 1,
+                            data: []
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        animation: {
+                            duration: 800,
+                            easing: 'easeOutQuart'
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                type: 'logarithmic',
+                                min: 1e-6,
+                                max: 1e-3,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value.toExponential(2);
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.parsed.y.toExponential(5) + 's';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+           
+                const retriveStagCtx = document.getElementById('retriveStagChart').getContext('2d');
+                retriveStagChart = new Chart(retriveStagCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: '时间 (s)',
+                            backgroundColor: 'rgba(3, 169, 244, 0.7)',
+                            borderColor: 'rgba(3, 169, 244, 1)',
+                            borderWidth: 1,
+                            data: []
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        animation: {
+                            duration: 800,
+                            easing: 'easeOutQuart'
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                type: 'logarithmic',
+                                min: 1e-6,
+                                max: 1e-3,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value.toExponential(2);
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.parsed.y.toExponential(5) + 's';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+            
+                const genXTokenCtx = document.getElementById('genXTokenChart').getContext('2d');
+                genXTokenChart = new Chart(genXTokenCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: '时间 (s)',
+                            backgroundColor: 'rgba(0, 188, 212, 0.7)',
+                            borderColor: 'rgba(0, 188, 212, 1)',
+                            borderWidth: 1,
+                            data: []
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        animation: {
+                            duration: 800,
+                            easing: 'easeOutQuart'
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                type: 'logarithmic',
+                                min: 1e-6,
+                                max: 1e-3,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value.toExponential(2);
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.parsed.y.toExponential(5) + 's';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+             
+                const subsetGaugeCtx = document.getElementById('subsetGauge').getContext('2d');
+                subsetGauge = new Chart(subsetGaugeCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['子集判定时间', '其他时间'],
+                        datasets: [{
+                            data: [0, 100],
+                            backgroundColor: [
+                                'rgba(33, 150, 243, 0.7)',
+                                'rgba(200, 200, 200, 0.5)'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        animation: {
+                            duration: 1200,
+                            easing: 'easeOutQuart'
+                        },
+                        circumference: 180,
+                        rotation: -90,
+                        cutout: '60%',
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+            
+            initCharts();
+            
+        
+            function updateTimeDisplay(id, time) {
+                const element = document.getElementById(id);
+                if (time < 0.001) {
+                    element.textContent = time.toExponential(2) + 's';
+                } else {
+                    element.textContent = time.toFixed(3) + 's';
+                }
+            }
+            
+      
+            function updateTimeBar(barId, time, maxTime) {
+                const bar = document.getElementById(barId);
+                const percentage = (time / maxTime) * 100;
+                bar.style.width = `${Math.min(percentage, 100)}%`;
+                if (time < 0.001) {
+                    bar.textContent = time.toExponential(2) + 's';
+                } else {
+                    bar.textContent = time.toFixed(3) + 's';
+                }
+            }
+            
+        
+            function displayQueryResults(result) {
+                const resultsContainer = document.getElementById('query-results');
+                resultsContainer.innerHTML = '';
+                
+             
+                const resultLine = result.split('\n').find(line => line.includes('无重复文档编号'));
+                if (!resultLine) {
+                    resultsContainer.textContent = '未找到文档编号';
+                    return;
+                }
+                
+              
+                const docIdsMatch = resultLine.match(/\[(.*?)\]/);
+                if (!docIdsMatch) {
+                    resultsContainer.textContent = '文档编号格式错误';
+                    return;
+                }
+                
+                const docIds = docIdsMatch[1].split(',').map(id => id.trim().replace(/['"\[\]]/g, ''));
+                
+               
+                const resultsList = document.createElement('div');
+                resultsList.className = 'results-list';
+                
+                docIds.forEach(id => {
+                    const docElement = document.createElement('div');
+                    docElement.className = 'result-item';
+                    docElement.textContent = `文档编号: ${id}`;
+                    resultsList.appendChild(docElement);
+                });
+                
+                resultsContainer.appendChild(resultsList);
+            }
+            
+          
+            function displayUnionQuery(content) {
+                const unionDisplay = document.getElementById('union-display');
+                unionDisplay.innerHTML = '';
+                
+                const words = content.trim().split(/\s+/);
+                words.forEach((word, index) => {
+                    // 添加单词
+                    const wordElement = document.createElement('div');
+                    wordElement.className = 'union-keyword';
+                    wordElement.textContent = word;
+                    wordElement.style.animationDelay = `${index * 100}ms`;
+                    unionDisplay.appendChild(wordElement);
+                    
+                    // 如果不是最后一个单词，添加并集运算符
+                    if (index < words.length - 1) {
+                        const operator = document.createElement('div');
+                        operator.className = 'union-operator';
+                        operator.textContent = '∨';
+                        operator.style.animationDelay = `${index * 100 + 50}ms`;
+                        unionDisplay.appendChild(operator);
+                    }
+                });
+            }
+            
+        
+            document.getElementById('submit-btn').addEventListener('click', function (event) {
                 event.preventDefault();
                 const indexFile = document.getElementById('index_file').value;
                 const invertedFile = document.getElementById('inverted_file').value;
@@ -504,51 +886,150 @@
                     return;
                 }
                 
-  
                 document.getElementById('loading').style.display = 'block';
-                document.getElementById('output').textContent = '正在处理查询，请稍候...';
+                document.getElementById('debug-log').textContent = '正在执行查询...';
                 
                 const formData = new FormData();
                 formData.append('index_file', indexFile);
                 formData.append('inverted_file', invertedFile);
                 formData.append('query_file', queryFile);
                 
-                // 更新最后查询时间
-                const now = new Date();
-                document.getElementById('update-time').textContent = 
-                    `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} 
-                    ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-                
-           
-                setTimeout(() => {
+            
+                const fileReader = new FileReader();
+                fileReader.onload = function(e) {
+                    const queryContent = e.target.result;
+                    displayUnionQuery(queryContent);
+                    
+                 
+                    const fileReadStart = performance.now();
+                    
+                 
                     fetch('/search_union', {
                         method: 'POST',
                         body: formData
                     })
                     .then(response => response.json())
                     .then(data => {
-                        document.getElementById('output').textContent = data.result;
+                    
+                        const fileReadTime = (performance.now() - fileReadStart) / 1000;
+                        updateTimeDisplay('file-read-time', fileReadTime);
+                        
                         document.getElementById('loading').style.display = 'none';
+                        
+                      
+                        const result = data.result;
+                     
+                        const highlight = result.replace(
+                          /(查询完成，无重复文档编号.*)/g,
+                          '<span style="font-size:1.1rem;font-weight:600;color:var(--primary-dark);">$1</span>'
+                        );
+                        document.getElementById('debug-log').innerHTML = highlight;
+                        
+                        const lines = result.split('\n');
+                        
+                 
+                        let setupTime = 0;
+                        let genStagTimes = {};
+                        let retriveStagTimes = {};
+                        let genXTokenTimes = {};
+                        let getEsTime = 0;
+                        let decTime = 0;
+                        let keywords = [];
+                        let keywordPairs = [];
+                        
+                   
+                        lines.forEach(line => {
+                      
+                            if (line.includes('edb setup:')) {
+                                setupTime = parseFloat(line.split(':')[1].trim().split(' ')[0]);
+                                updateTimeDisplay('index-build-time', setupTime);
+                            }
+                         
+                            else if (line.includes('gen stag for')) {
+                                const parts = line.split(':');
+                                const timePart = parts[1].trim();
+                                const timeValue = parseFloat(timePart.split(' ')[0]);
+                                const keyword = parts[0].split('gen stag for ')[1].trim();
+                                genStagTimes[keyword] = timeValue;
+                                keywords.push(keyword);
+                            }
+                        
+                            else if (line.includes('retrive stag for')) {
+                                const parts = line.split(':');
+                                const timePart = parts[1].trim();
+                                const timeValue = parseFloat(timePart.split(' ')[0]);
+                                const keyword = parts[0].split('retrive stag for ')[1].trim();
+                                retriveStagTimes[keyword] = timeValue;
+                            }
+                          
+                            else if (line.includes('gen xtoken for')) {
+                                const parts = line.split(':');
+                                const timePart = parts[1].trim();
+                                const timeValue = parseFloat(timePart.split(' ')[0]);
+                                const keywordPair = parts[0].split('gen xtoken for ')[1].trim();
+                                genXTokenTimes[keywordPair] = timeValue;
+                                keywordPairs.push(keywordPair);
+                            }
+                           
+                            else if (line.includes('get es:')) {
+                                const parts = line.split(':');
+                                getEsTime = parseFloat(parts[1].trim().split(' ')[0]);
+                            }
+                           
+                            else if (line.includes('dec to get res:')) {
+                                const parts = line.split(':');
+                                decTime = parseFloat(parts[1].trim().split(' ')[0]);
+                                updateTimeDisplay('response-time', decTime);
+                            }
+                        });
+                        
+                    
+                        const genStagSum = Object.values(genStagTimes).reduce((a, b) => a + b, 0);
+                        const retriveStagSum = Object.values(retriveStagTimes).reduce((a, b) => a + b, 0);
+                        const denominator = setupTime + genStagSum + retriveStagSum + getEsTime + decTime;
+                        const subsetPermillage = denominator > 0 ? (getEsTime / denominator) * 10000 : 0;
+                        
+                     
+                        const totalTime = fileReadTime + setupTime + genStagSum + retriveStagSum + getEsTime + decTime;
+                        
+                      
+                        updateTimeDisplay('total-time', totalTime);
+                        const maxTime = Math.max(fileReadTime, setupTime, decTime, totalTime);
+                        updateTimeBar('total-time-bar', totalTime, maxTime);
+
+                      
+                        updateTimeBar('file-read-bar', fileReadTime, maxTime);
+                        updateTimeBar('index-build-bar', setupTime, maxTime);
+                        updateTimeBar('response-bar', decTime, maxTime);
+                        
+                       
+                        subsetGauge.data.datasets[0].data = [subsetPermillage / 100, 100 - subsetPermillage / 100];
+                        subsetGauge.update();
+                        document.getElementById('gauge-value').textContent = `${subsetPermillage.toFixed(2)}‱`;
+
+                     
+                        genStagChart.data.labels = keywords;
+                        genStagChart.data.datasets[0].data = keywords.map(k => genStagTimes[k] || 0);
+                        genStagChart.update();
+                        
+                        retriveStagChart.data.labels = keywords;
+                        retriveStagChart.data.datasets[0].data = keywords.map(k => retriveStagTimes[k] || 0);
+                        retriveStagChart.update();
+                        
+                        genXTokenChart.data.labels = keywordPairs;
+                        genXTokenChart.data.datasets[0].data = keywordPairs.map(p => genXTokenTimes[p] || 0);
+                        genXTokenChart.update();
+                        
+                     
+                        displayQueryResults(result);
                     })
                     .catch(error => {
-                        document.getElementById('output').textContent = '查询失败，请稍后重试';
                         document.getElementById('loading').style.display = 'none';
+                        document.getElementById('debug-log').innerHTML = '查询出错: ' + error.message;
                         console.error('Error:', error);
                     });
-                }, 1500);
-            });
-            
-         
-            document.addEventListener('click', function(e) {
-                const ripple = document.createElement('div');
-                ripple.classList.add('water-effect');
-                ripple.style.left = `${e.clientX}px`;
-                ripple.style.top = `${e.clientY}px`;
-                document.body.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 1500);
+                };
+                fileReader.readAsText(queryFile);
             });
         });
     </script>
